@@ -1,5 +1,5 @@
 import React from "react"
-import { View, Text, Image, ScrollView, ActivityIndicator, StyleSheet, ViewStyle, TextStyle, ImageStyle } from "react-native"
+import { View, Text, Image, ScrollView, ActivityIndicator, StyleSheet, ViewStyle, TextStyle, ImageStyle, StatusBar } from "react-native"
 import * as Api from "./services/Api"
 import colors from "./colors"
 
@@ -35,6 +35,7 @@ export default class App extends React.Component<void, State> {
     console.debug(this.state.data)
     return (
       <ScrollView contentContainerStyle={{ paddingBottom: 30 }} style={styles.content}>
+        <StatusBar backgroundColor={colors.darkPrimaryColor} barStyle="light-content" />
         {loading ? <ActivityIndicator /> : this.renderContent()}
       </ScrollView>
     )
@@ -62,16 +63,18 @@ export default class App extends React.Component<void, State> {
       <View>
         {this.renderMovies()}
         {this.renderSectionTitle("Prochainement".toUpperCase())}
-        {this.renderSection()}
+        {this.renderSection(1, 10)}
+        {this.renderSectionTitle("Autres".toUpperCase())}
+        {this.renderSection(10, undefined)}
       </View>
     )
   }
 
-  renderSection = () => {
+  renderSection = (a: number, b: number | undefined) => {
     const { movies } = this.state.data
     return (
       <ScrollView horizontal>
-        {movies.slice(1).map(this.renderHorizonal)}
+        {movies.slice(a, b).map(this.renderHorizonal)}
       </ScrollView>
     )
   }
