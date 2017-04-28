@@ -3,7 +3,7 @@ export const API_URL = "http://localhost:3000"
 export function getInitData(): Promise<any> {
   const query = `
   {
-    movies {
+    movies(offset: 0, take: 10) {
       _id
       title
       poster
